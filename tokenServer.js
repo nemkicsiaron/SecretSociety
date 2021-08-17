@@ -25,7 +25,11 @@ app.delete('/logout', (req, res) => {
     res.sendStatus(204)
 })
 
-app.post('/login', genAccessToken, (req, res) => {
+app.post('/login', genAccessToken, async (req, res) => {
+    const user = users.find(user => user.name = req.body.name)
+    if(user == null) {
+        return res.status(400).send('Cannot find user')
+    }
     // Authentication TODO
     const { username, password } = req.body;
     const user = {name: username}
