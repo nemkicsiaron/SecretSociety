@@ -37,7 +37,7 @@ app.post('/login', genAccessToken, async (req, res) => {
     const accessToken = genAccessToken(user)
     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
     refreshTokenList.push(refreshToken)
-    res.json({accessToken: accessToken, refreshToken: refreshToken})
+    res.json({accessToken, refreshToken})
     res.send("Response");
 })
 
