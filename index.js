@@ -29,6 +29,25 @@ app.post('/members', async (req, res) => {
     }
 })
 
+app.post('/members/login', async (req, res) => {
+    const user = users.find(user => user.name = req.body.name)
+    if(user == null) {
+        return res.sendStatus(400)
+    }
+    try {
+        if(await bcrypt.compare(req.body.password, user.password)) {
+            res.send('Success')
+        }
+        else {
+            res.send('Not Allowed')
+        }
+    }
+    catch {
+        res.sendStatus(500)
+    }
+})
+
+
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
